@@ -106,7 +106,7 @@
     // any meta tag is to be implemented in settings.json, lib/settings.js and in views/layout.pug
     // 3 places to care about - just repeat the pattern
     "head_description": "Dingocoin Block Explorer. Information on all Dingocoin transactions and blocks.",
-    "head_author": "SuperTechDudes in conjunction with Dingocoin Project",
+    "head_author": "Various authors listed in file LICENSE (located on code root). Dingocoin specific settings added by Dingocoin Project.",
     "head_keywords": "Block, Explorer, Of, Dingocoin, Such, Wild, Doge",
     "favicons": {
       // favicon32: The path to a 32x32 image or icon file
