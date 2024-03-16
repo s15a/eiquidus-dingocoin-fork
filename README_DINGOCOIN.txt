@@ -78,7 +78,7 @@ exit 0
 update Transactions sudo and regular version:
 
 #!/bin/bash
-	#su - user -c "cd /home/pp/E_iquidus && /usr/bin/node --stack-size=2048 scripts/sync.js index update" > /dev/null 2>&1
-	cd /home/pp/E_iquidus && /usr/bin/node --stack-size=2048 scripts/sync.js index update
+	#su - user -c "cd /home/user/E_iquidus && /usr/bin/node --stack-size=2048 scripts/sync.js index update" > /dev/null 2>&1
+	cd /home/user/E_iquidus && /usr/bin/node --stack-size=2048 scripts/sync.js index update
 exit 0
 
