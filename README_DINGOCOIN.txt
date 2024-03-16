@@ -17,7 +17,7 @@ Changes specific to DINGOCOIN
 1. Recommended config: dingocoin ready settings.json.template - default social images in footer (insert users, passwords, database name at the top).
 
 2. Config with better social media images. Dingocoin ready settings.json.with_logos.template (insert users, passwords, database name at the top).
-* Social images and configuration are ready to use. But light logos are in production version instead - a lawyer needed to confirm how to do it 100% legal and safe.
+* Social images and configuration are ready to use. 
 
 3. Added Discord, X, Github and Telegram footer images to public/img (please see 2.).
 
@@ -31,7 +31,9 @@ Changes specific to DINGOCOIN
 
 8. Added robots.txt and sitemap.xml.
 
-9. Dingocoin specific changes are described in file README_DINGOCOIN.txt.
+9. Added the Dingocoin theme public/css/themes/dingo/.
+
+10. Dingocoin specific changes are described in file README_DINGOCOIN.txt.
  
 
 
