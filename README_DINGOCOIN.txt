@@ -1,6 +1,15 @@
 
 
 
+Origin
+====================
+
+eIquidus explorer is forked from:
+
+	https://github.com/team-exor/eiquidus
+
+
+
 
 Changes specific to DINGOCOIN
 =====================================
@@ -25,13 +34,15 @@ Changes specific to DINGOCOIN
 
 
 
-Metadata "author" is "Various authors listed in file LICENSE (located on code root). Dingocoin specific settings added by Dingocoin Project.".
+Metadata "author"
+=====================
+Metadata "author" (head) is "Various authors listed in file LICENSE (located on code root). Dingocoin specific settings added by Dingocoin Project.".
+
 
 
 
 Scripts
 ==================
-
 
 Linux user that executes next scripts is to be unprivileged.
 
