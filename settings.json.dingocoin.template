@@ -102,12 +102,12 @@
     //          NOTE: If any of the favicons are left blank or not set to a valid file, they will be disabled and unused
     // meta tags
     // basic SEO data: description, author, keywords
-    // other meta tags related to X, fb etc can be added here
+    // more meta tags related to X, fb etc can be added here
     // any meta tag is to be implemented in settings.json, lib/settings.js and in views/layout.pug
     // 3 places to care about - just repeat the pattern
     "head_description": "Dingocoin Block Explorer. Information on all Dingocoin transactions and blocks.",
     "head_author": "Various authors listed in file LICENSE (located on code root). Dingocoin specific settings added by Dingocoin Project.",
-    "head_keywords": "Block, Explorer, Of, Dingocoin, Such, Wild, Doge",
+    "head_keywords": "Block, Explorer, Of, Dingocoin, Such, a, Wild, Doge",
     "favicons": {
       // favicon32: The path to a 32x32 image or icon file
       //            NOTE: The path root is /public
