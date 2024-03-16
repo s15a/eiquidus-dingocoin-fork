@@ -24,7 +24,6 @@ Changes specific to DINGOCOIN
 
 
 Metadata "author" is "Various authors listed in file LICENSE (located on code root). Dingocoin specific settings added by Dingocoin Project.".
-Think it's legal and correct.
 
 
 
