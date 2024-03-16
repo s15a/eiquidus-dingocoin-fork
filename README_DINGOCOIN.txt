@@ -19,6 +19,8 @@ Changes specific to DINGOCOIN
 6. Dingocoin images everywhere.
 
 7. Dingocoin screenshot.
+
+8. Added robots.txt and sitemap.xml.
  
 
 
