@@ -30,6 +30,8 @@ Changes specific to DINGOCOIN
 7. Dingocoin screenshot.
 
 8. Added robots.txt and sitemap.xml.
+
+9. Dingocoin specific changes are described in file README_DINGOCOIN.txt.
  
 
 
