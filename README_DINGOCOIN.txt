@@ -10,15 +10,15 @@ Changes specific to DINGOCOIN
 2. Config with better social media images. Dingocoin ready settings.json.with_logos.template (insert users, passwords, database name at the top).
 * Social images and configuration are ready to use. But light logos are in production version instead - a lawyer needed to confirm how to do it 100% legal and safe.
 
-3. Added Discord, X, Github and Telegram footer images to public/img (please see 2.)
+3. Added Discord, X, Github and Telegram footer images to public/img (please see 2.).
 
 4. Added basic SEO meta data into the head: title, author and keywords. How-to add more meta data is described in settings.json as a comment.
 
-5. Background of Richlist pie set to transparent, grid: {borderWidth:0, shadow:false, background:'transparent'} in views/richlist.pug
+5. Background of Richlist pie set to transparent, grid: {borderWidth:0, shadow:false, background:'transparent'} in views/richlist.pug.
 
-6. Dingocoin images everywhere
+6. Dingocoin images everywhere.
 
-7. Dingocoin screenshots
+7. Dingocoin screenshot.
  
 
 
