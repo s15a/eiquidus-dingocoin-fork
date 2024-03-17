@@ -97,3 +97,11 @@ update Transactions sudo and regular version:
 	cd /home/user/E_iquidus && /usr/bin/node --stack-size=2048 scripts/sync.js index update
 exit 0
 
+
+
+rescan and flatten the tx count value for faster access, sudo and regular version:
+
+#!/bin/bash
+	#su - user -c "cd /home/user/E_iquidus && /usr/bin/npm run reindex-txcount" > /dev/null 2>&1
+	cd /home/user/E_iquidus && /usr/bin/npm run reindex-txcount
+exit 0
