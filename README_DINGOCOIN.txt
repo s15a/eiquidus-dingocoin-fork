@@ -203,6 +203,7 @@ do
    sleep 5
    t=$( ps -ef | grep -v grep | grep "node \/home\/" | wc -l )
 done
+/usr/bin/pm2 save
 
 # stop daemon
 
