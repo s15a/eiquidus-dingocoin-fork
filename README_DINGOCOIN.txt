@@ -104,7 +104,7 @@ do
    echo -e "$( date +"%F %H:%M:%S" ) \t wait dingocoind sync"
    sleep 5
    p=$( ps -ef | grep -v grep | grep dingocoind | wc -l )
-   b=$( tail -n 1 /home/user/.dingocoin/debug.log | grep "new best=" | grep "\(1.000000\|0.999999\)" | wc -l )
+   b=$( tail -n 1 /home/user/.dingocoin/debug.log | grep "new best=" | grep "\(1.00000\|0.99999\)" | wc -l )
    pb=$(( $p+$b ))
 done
 
