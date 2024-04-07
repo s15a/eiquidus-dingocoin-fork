@@ -190,7 +190,7 @@ fi
 
 # stop eiquidus
 
-echo -e "$( gate +"%F %H:%M:%S" ) \t eiquidus stop"
+echo -e "$( date +"%F %H:%M:%S" ) \t eiquidus stop"
 cd /home/user/E_iquidus/ &&
 /usr/bin/pm2 stop explorer
 
@@ -199,7 +199,7 @@ cd /home/user/E_iquidus/ &&
 t=1
 while [[ $t -gt 0 ]]
 do
-   echo -e "$( date +"%F %H:%M:%S" ) \t eiquidus stop"
+   echo -e "$( date +"%F %H:%M:%S" ) \t wait eiquidus stop"
    sleep 5
    t=$( ps -ef | grep -v grep | grep "node \/home\/" | wc -l )
 done
