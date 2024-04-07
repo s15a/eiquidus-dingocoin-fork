@@ -77,7 +77,7 @@ su - user -c "/usr/local/bin/rc.eiqui | tee ~/eiquidus_start.log"
 #!/bin/bash
 
 # Start script is to be executed as a unprivileged user at "init multuiser" time, rc.local style. The "sudo sync" command is recommended after execution.
-# It disables cron updates, starts dingocoind and eiquidus. Last 50 blocks in database are checked. Cron updates are enables at the end.
+# It disables cron updates, starts dingocoind and eiquidus. Last 50 blocks in database are checked. Cron updates are enabled at the end.
 
 # logfile /home/user/eiquidus_start.log:
 # su - user -c "/usr/local/bin/rc.eiqui | tee ~/eiquidus_start.log"
@@ -203,7 +203,6 @@ do
    sleep 5
    t=$( ps -ef | grep -v grep | grep "node \/home\/" | wc -l )
 done
-/usr/bin/pm2 save
 
 # stop daemon
 
