@@ -1318,6 +1318,18 @@
       "type": "success",
       "url": "https://explorer.dingocoin.com/address/9sD6EdKD5aM8LDnnPp8A834hDb6KQphXBH"
     },
+    "9uXqhyEf77URSSa9vBN1uMSaB2CKH3yVBi": {
+      "enabled": true,
+      "label": "wDingo-SOL",
+      "type": "success",
+      "url": "https://explorer.dingocoin.com/address/9sD6EdKD5aM8LDnnPp8A834hDb6KQphXBH"
+    },
+    "A4KTTmS4dECRZAn6ycsavechg8ccyjxkJP": {
+      "enabled": true,
+      "label": "marketing fund",
+      "type": "success",
+      "url": "https://explorer.dingocoin.com/address/9sD6EdKD5aM8LDnnPp8A834hDb6KQphXBH"
+    },
     // A collection of settings that pertain to the EXorBurnAddressXXXXXXXXXXXXXW7cDZQ wallet address
     // NOTE: Change this value to the wallet address that you would like to set a custom label on
     // A collection of settings that pertain to the EJ6yc47cAZMGWHFccc9gfGbDLYuyNhP6wL wallet address
