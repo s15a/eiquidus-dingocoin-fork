@@ -32,7 +32,6 @@
     // password: The wallet RPC password
     "password": "dingorpcpasswd"
   },
-
   // webserver: a collection of settings that pertain to the node.js express web framework (read more: https://www.npmjs.com/package/express)
   "webserver": {
     // port: Port # to configure the express webserver to listen for http requests on
