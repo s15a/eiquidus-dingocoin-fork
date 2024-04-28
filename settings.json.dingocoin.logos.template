@@ -32,18 +32,6 @@
     // password: The wallet RPC password
     "password": "dingorpcpasswd"
   },
-    "9uXqhyEf77URSSa9vBN1uMSaB2CKH3yVBi": {
-      "enabled": true,
-      "label": "wDingo-SOL",
-      "type": "success",
-      "url": "https://explorer.dingocoin.com/address/9sD6EdKD5aM8LDnnPp8A834hDb6KQphXBH"
-    },
-    "A4KTTmS4dECRZAn6ycsavechg8ccyjxkJP": {
-      "enabled": true,
-      "label": "marketing fund",
-      "type": "success",
-      "url": "https://explorer.dingocoin.com/address/9sD6EdKD5aM8LDnnPp8A834hDb6KQphXBH"
-    },
   // webserver: a collection of settings that pertain to the node.js express web framework (read more: https://www.npmjs.com/package/express)
   "webserver": {
     // port: Port # to configure the express webserver to listen for http requests on
@@ -1326,6 +1314,18 @@
     "9sD6EdKD5aM8LDnnPp8A834hDb6KQphXBH": {
       "enabled": true,
       "label": "wDingo-BSC",
+      "type": "success",
+      "url": "https://explorer.dingocoin.com/address/9sD6EdKD5aM8LDnnPp8A834hDb6KQphXBH"
+    },
+    "9uXqhyEf77URSSa9vBN1uMSaB2CKH3yVBi": {
+      "enabled": true,
+      "label": "wDingo-SOL",
+      "type": "success",
+      "url": "https://explorer.dingocoin.com/address/9sD6EdKD5aM8LDnnPp8A834hDb6KQphXBH"
+    },
+    "A4KTTmS4dECRZAn6ycsavechg8ccyjxkJP": {
+      "enabled": true,
+      "label": "marketing fund",
       "type": "success",
       "url": "https://explorer.dingocoin.com/address/9sD6EdKD5aM8LDnnPp8A834hDb6KQphXBH"
     },
