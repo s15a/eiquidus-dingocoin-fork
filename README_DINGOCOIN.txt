@@ -82,11 +82,12 @@ su - user -c "/usr/local/bin/rc.eiqui | tee ~/eiquidus_start.log"
 # logfile /home/user/eiquidus_start.log:
 # su - user -c "/usr/local/bin/rc.eiqui | tee ~/eiquidus_start.log"
 
-# disable cron db updates
+# disable cron db updates and wait tasks to stop
 
 if [[ -f "/dev/shm/canupdate.txt" ]] ; then
    echo -e "$( date +"%F %H:%M:%S" ) \t disable cron db updates"
    rm -f /dev/shm/canupdate.txt
+   sleep 10
 fi
 
 # start daemon
@@ -181,11 +182,12 @@ su - user -c "/usr/local/bin/rc.eiqui_down  | tee ~/eiquidus_stop.log"
 # logfile /home/user/eiquidus_stop.log:
 # su - user -c "/usr/local/bin/rc.eiqui_down  | tee ~/eiquidus_stop.log"
 
-# disable cron db updates
+# disable cron db updates and wait tasks to stop
 
 if [[ -f "/dev/shm/canupdate.txt" ]] ; then
    echo -e "$( date +"%F %H:%M:%S" ) \t disable cron db updates"
    rm -f /dev/shm/canupdate.txt
+   sleep 10
 fi
 
 # stop eiquidus
