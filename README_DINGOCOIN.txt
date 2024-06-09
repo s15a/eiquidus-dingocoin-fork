@@ -264,7 +264,7 @@ exit 0
 Update Transactions regular user version script
 =======================================================
 
-Update Transactions script is to be executed only as as an unprivileged user.
+Update Transactions script is to be executed only as an unprivileged user.
 
 ########################################################################< remove before use>###
 #!/bin/bash
