@@ -261,15 +261,27 @@ exit 0
 
 
 
-Update Transactions sudo and regular version script
+Update Transactions regular user version script
 =======================================================
+
+Update Transactions script is to be executed only as as an unprivileged user.
 
 ########################################################################< remove before use>###
 #!/bin/bash
 
 if [[ -f "/dev/shm/canupdate.txt" ]] ; then
-   #su - user -c "cd /home/user/E_iquidus && /usr/bin/node --stack-size=2048 scripts/sync.js index update" > /dev/null 2>&1
    cd /home/user/E_iquidus && /usr/bin/node --stack-size=2048 scripts/sync.js index update
+
+   # last block in db
+
+   l=0
+   l=$( mongosh EIxplorerdb --eval "db.coinstats.find()" | grep "last\:" | grep -v "last\: 0," | sed "1,$ s/^\(.*\)last\: \(.*\),/\2/g" )
+
+   # check last 5 blocks in db
+
+   n=$(( $l-5 ))
+   cd /home/user/E_iquidus &&
+   /usr/bin/node --stack-size=2048 scripts/sync.js index check $n
 fi
 
 exit 0
