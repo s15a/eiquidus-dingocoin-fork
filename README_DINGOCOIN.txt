@@ -264,7 +264,7 @@ exit 0
 Update Transactions regular user version script
 =======================================================
 
-Update Transactions script is to be executed only as an unprivileged user.
+Update Transactions script is to be executed only as an unprivileged user. It's to be cron executed every minute, the "n=$(( $l-5 ))" is meant for 1min update intervals.
 
 ########################################################################< remove before use>###
 #!/bin/bash
