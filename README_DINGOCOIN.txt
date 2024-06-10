@@ -275,7 +275,7 @@ if [[ -f "/dev/shm/canupdate.txt" ]] ; then
    # last block in db
 
    l=0
-   l=$( mongosh EIxplorerdb --eval "db.coinstats.find()" | grep "last\:" | grep -v "last\: 0," | sed "1,$ s/^\(.*\)last\: \(.*\),/\2/g" )
+   l=$( mongosh explorerdb --eval "db.coinstats.find()" | grep "last\:" | grep -v "last\: 0," | sed "1,$ s/^\(.*\)last\: \(.*\),/\2/g" )
 
    # check last 5 blocks in db
 
