@@ -137,12 +137,17 @@ l=0
 l=$( mongosh EIxplorerdb --eval "db.coinstats.find()" | grep "last\:" | grep -v "last\: 0," | sed "1,$ s/^\(.*\)last\: \(.*\),/\2/g" )
 echo -e "$( date +"%F %H:%M:%S" ) \t last block is $l"
 
-# check last 50 blocks in db
+# check last 100 blocks in db
+# don't check when db is empty
 
-n=$(( $l-50 ))
-echo -e "$( date +"%F %H:%M:%S" ) \t db check since block $n"
-cd /home/user/E_iquidus &&
-/usr/bin/node --stack-size=2048 scripts/sync.js index check $n
+if [[ $l != "" ]] && [[ $l -gt 1000 ]] ; then
+   n=$(( $l-100 ))
+   echo -e "$( date +"%F %H:%M:%S" ) \t db check since block $n"
+   cd /home/user/E_iquidus &&
+   /usr/bin/node --stack-size=2048 scripts/sync.js index check $n
+else
+   echo -e "empty db, cron triggered sync next ..."
+fi
 
 # become ready for cron executed scripts
 
