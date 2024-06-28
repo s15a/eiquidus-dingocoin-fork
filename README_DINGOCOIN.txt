@@ -14,6 +14,8 @@ Index
 - Update Peers script
 - Update Transactions script
 - Rescan and flatten the tx count script
+- Compare databases script
+- Prepare for db sync script
 
 
 
@@ -87,7 +89,7 @@ su - user -c "/usr/local/bin/rc.eiqui | tee ~/eiquidus_start.log"
 if [[ -f "/dev/shm/canupdate.txt" ]] ; then
    echo -e "$( date +"%F %H:%M:%S" ) \t disable cron db updates"
    rm -f /dev/shm/canupdate.txt
-   sleep 10
+   sleep 30
 fi
 
 # start daemon
@@ -139,14 +141,17 @@ echo -e "$( date +"%F %H:%M:%S" ) \t last block is $l"
 
 # check last 100 blocks in db
 # don't check when db is empty
+# sync empty db 
 
-if [[ $l != "" ]] && [[ $l -gt 1000 ]] ; then
+if [[ $l != "" ]] && [[ $l -gt 200 ]] ; then
    n=$(( $l-100 ))
    echo -e "$( date +"%F %H:%M:%S" ) \t db check since block $n"
    cd /home/user/E_iquidus &&
    /usr/bin/node --stack-size=2048 scripts/sync.js index check $n
 else
-   echo -e "empty db, cron triggered sync next ..."
+   echo -e "$( date +"%F %H:%M:%S" ) \t empty db, sync next ..."
+   cd /home/user/E_iquidus &&
+   /usr/bin/node --stack-size=2048 scripts/sync.js index update > /dev/null 2>&1
 fi
 
 # become ready for cron executed scripts
@@ -304,6 +309,106 @@ Rescan and flatten the tx count value for faster access, sudo and regular versio
 if [[ -f "/dev/shm/canupdate.txt" ]] ; then
    su - user -c "cd /home/user/E_iquidus && /usr/bin/npm run reindex-txcount" > /dev/null 2>&1
 fi
+
+exit 0
+########################################################################< remove before use>###
+
+
+
+
+Compare databases script
+============================
+
+Run it as a regular unprivileged user. Compare richlists of two members of cluster. Script would be different in case of more than two cluster members. File dorepair.txt in /dev/shm is a sign of errors.
+
+logfile /home/user/db_sync_check.log
+
+########################################################################< remove before use>###
+#!/bin/bash
+
+# ten tests of richlists, 1/minute. more than 7 errors create /dev/shm/dorepeair.txt file.
+# this file is a sign to correct db.
+
+echo -e "" >> ~/db_sync_check.log
+echo -e "$( date +"%F %H:%M:%S" ) \t compare databases start" >> ~/db_sync_check.log
+
+a=""
+b=""
+sum=0
+
+for i in 1 2 3 4 5 6 7 8 9 10 ; do
+   a=""
+   b=""
+   a=$( curl -sw ' STATUS_CODE=%{http_code}' https://tmpexplorer.dingocoin.com/ext/getdistribution )
+   b=$( curl -sw ' STATUS_CODE=%{http_code}' https://tnpexplorer.dingocoin.com/ext/getdistribution )
+   s1=$( echo $a | sed "1,$ s/^\(.*\) STATUS_CODE=\(.*\)$/\2/" )
+   s2=$( echo $b | sed "1,$ s/^\(.*\) STATUS_CODE=\(.*\)$/\2/" )
+
+   echo -e "$( date +"%F %H:%M:%S" ) \t a ... $a" >> ~/db_sync_check.log
+   echo -e "$( date +"%F %H:%M:%S" ) \t b ... $b" >> ~/db_sync_check.log
+
+   if [[ $a != $b ]] && [[ $s1 -eq 200 ]] && [[ $s2 -eq 200 ]] ; then
+      sum=$(( $sum + 1 ))
+   else
+      sum=$(( $sum + 0 ))
+   fi
+
+   echo -e "$( date +"%F %H:%M:%S" ) \t $i ... sum = $sum" >> ~/db_sync_check.log
+
+   sleep 59
+done
+
+echo $sum
+
+if [[ $sum -gt 7 ]] ; then
+   echo -e "$( date +"%F %H:%M:%S" ) \t dorepair.txt" >> ~/db_sync_check.log
+   date > /dev/shm/dorepeair.txt
+else
+   echo -e "$( date +"%F %H:%M:%S" ) \t databases are equal, no need to repair" >> ~/db_sync_check.log
+
+fi
+
+exit 0
+########################################################################< remove before use>###
+
+
+
+
+Prepare for db sync script
+===============================
+
+This script is run by cron. Database is cleaned and recreated when needed.
+
+########################################################################< remove before use>###
+#!/bin/bash
+
+# compare richlists and repair db if needed
+# observed: /dev/shm/dorepeair.txt
+
+if [[ -f "/dev/shm/dorepeair.txt" ]] ; then
+   echo -e "$( date +"%F %H:%M:%S" ) \t clean old file dorepair.txt (should be missing ...)"
+   rm -f /dev/shm/dorepeair.txt
+fi
+
+# check richlists
+echo -e "$( date +"%F %H:%M:%S" ) \t compare databases"
+su - pp -c "/usr/local/bin/rc.napake"
+
+# stop cron updates
+# stop web server
+if [[ -f "/dev/shm/dorepeair.txt" ]] ; then
+   echo -e "$( date +"%F %H:%M:%S" ) \t disable cron db updates and stop web server"
+   rm -f /dev/shm/canupdate.txt
+   systemctl stop nginx
+   sleep 120
+   # delete database and create new empty one
+   su - pp -c "cd /home/pp/E_iquidus && echo 'y' | npm run delete-database"
+   # reboot
+   sync
+   reboot
+fi
+
+echo -e "$( date +"%F %H:%M:%S" ) \t equal richlists, no need to resync"
 
 exit 0
 ########################################################################< remove before use>###
