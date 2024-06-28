@@ -397,7 +397,7 @@ fi
 
 # check richlists
 echo -e "$( date +"%F %H:%M:%S" ) \t compare databases"
-su - pp -c "/usr/local/bin/rc.napake"
+su - user -c "/usr/local/bin/rc.napake"
 
 # stop cron updates
 # stop web server
@@ -407,7 +407,7 @@ if [[ -f "/dev/shm/dorepeair.txt" ]] ; then
    systemctl stop nginx
    sleep 120
    # delete database and create new empty one
-   su - pp -c "cd /home/pp/E_iquidus && echo 'y' | npm run delete-database"
+   su - user -c "cd /home/user/E_iquidus && echo 'y' | npm run delete-database"
    # reboot
    sync
    reboot
