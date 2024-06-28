@@ -397,7 +397,7 @@ fi
 
 # check richlists
 echo -e "$( date +"%F %H:%M:%S" ) \t compare databases"
-su - user -c "/usr/local/bin/rc.napake"
+su - user -c "/path-to-script/rc.check_errors"
 
 # stop cron updates
 # stop web server
