@@ -16,6 +16,7 @@ Index
 - Rescan and flatten the tx count script
 - Compare databases script
 - Prepare for db sync script
+- Logrotate
 
 
 
@@ -334,13 +335,17 @@ echo -e "$( date +"%F %H:%M:%S" ) \t compare databases start" >> ~/db_sync_check
 
 a=""
 b=""
+s1=404
+s2=404
 sum=0
 
 for i in 1 2 3 4 5 6 7 8 9 10 ; do
    a=""
    b=""
-   a=$( curl -sw ' STATUS_CODE=%{http_code}' https://tmpexplorer.dingocoin.com/ext/getdistribution )
-   b=$( curl -sw ' STATUS_CODE=%{http_code}' https://tnpexplorer.dingocoin.com/ext/getdistribution )
+   s1=404
+   s2=404
+   a=$( curl -sw ' STATUS_CODE=%{http_code}' https://unitAexplorer.dingocoin.com/ext/getdistribution )
+   b=$( curl -sw ' STATUS_CODE=%{http_code}' https://unitBexplorer.dingocoin.com/ext/getdistribution )
    s1=$( echo $a | sed "1,$ s/^\(.*\) STATUS_CODE=\(.*\)$/\2/" )
    s2=$( echo $b | sed "1,$ s/^\(.*\) STATUS_CODE=\(.*\)$/\2/" )
 
@@ -411,4 +416,25 @@ fi
 echo -e "$( date +"%F %H:%M:%S" ) \t equal richlists, no need to resync"
 
 exit 0
+########################################################################< remove before use>###
+
+
+
+
+Logrotate
+===============
+
+file is in /etc/logrotate.d/
+location of logs is a homedir of regular user
+
+########################################################################< remove before use>###
+/home/user/db_sync_check.log /home/user/eiquidus_start.log /home/user/eiquidus_stop.log {
+       weekly
+       rotate 5
+       delaycompress
+       compress
+       notifempty
+       missingok
+       copytruncate
+}
 ########################################################################< remove before use>###
