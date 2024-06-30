@@ -61,7 +61,7 @@ Metadata "author" (head) is "Various authors listed in file LICENSE (located on 
 Scripts
 ==================
 
-Linux user that executes next scripts is to be unprivileged.
+Few scripts to handle tasks. Please remove comments before use.
 
 
 
@@ -70,8 +70,7 @@ Start script
 ================
 
 Start script is to be executed as a unprivileged user at "init multuiser" time, rc.local style. The "sudo sync" command is recommended after execution.
-It disables cron updates, starts dingocoind and eiquidus. Last 50 blocks in database are checked. Cron updates are enables at the end.
-Please remove comments before use.
+It disables cron updates, starts dingocoind and eiquidus. Last 100 blocks in database are checked. Cron updates are enabled at the end.
 
 logfile /home/user/eiquidus_start.log:
 su - user -c "/usr/local/bin/rc.eiqui | tee ~/eiquidus_start.log"
@@ -179,7 +178,6 @@ Stop script
 
 Stop is to be executed as an unprivileged user at "exit multiuser" time, rc.local-shutdown style. The "sudo sync" command is recommended after execution.
 It disables cron updates at the beginning, stops eiquidus and dingocoind.
-Please remove comments before use.
 
 logfile /home/user/eiquidus_stop.log:
 su - user -c "/usr/local/bin/rc.eiqui_down  | tee ~/eiquidus_stop.log"
@@ -320,7 +318,7 @@ exit 0
 Compare databases script
 ============================
 
-Run it as a regular unprivileged user. Compare richlists of two members of cluster. Script would be different in case of more than two cluster members. File dorepair.txt in /dev/shm is a sign of errors.
+Run it as a regular unprivileged user. Compares richlists of two members of cluster. Script would be different in case of more than two cluster members. File dorepair.txt in /dev/shm is a sign of errors.
 
 logfile /home/user/db_sync_check.log
 
@@ -351,6 +349,10 @@ for i in 1 2 3 4 5 6 7 8 9 10 ; do
 
    echo -e "$( date +"%F %H:%M:%S" ) \t a ... $a" >> ~/db_sync_check.log
    echo -e "$( date +"%F %H:%M:%S" ) \t b ... $b" >> ~/db_sync_check.log
+   echo -e "$( date +"%F %H:%M:%S" ) \t status1 ... $s1" >> ~/db_sync_check.log
+   echo -e "$( date +"%F %H:%M:%S" ) \t status2 ... $s2" >> ~/db_sync_check.log
+
+   # http status 200 only accepted as regular result
 
    if [[ $a != $b ]] && [[ $s1 -eq 200 ]] && [[ $s2 -eq 200 ]] ; then
       sum=$(( $sum + 1 ))
@@ -363,14 +365,13 @@ for i in 1 2 3 4 5 6 7 8 9 10 ; do
    sleep 59
 done
 
-echo $sum
+# create the dorepair.txt file in case of over 7 errors
 
 if [[ $sum -gt 7 ]] ; then
    echo -e "$( date +"%F %H:%M:%S" ) \t dorepair.txt" >> ~/db_sync_check.log
    date > /dev/shm/dorepeair.txt
 else
    echo -e "$( date +"%F %H:%M:%S" ) \t databases are equal, no need to repair" >> ~/db_sync_check.log
-
 fi
 
 exit 0
@@ -396,11 +397,14 @@ if [[ -f "/dev/shm/dorepeair.txt" ]] ; then
 fi
 
 # check richlists
+
 echo -e "$( date +"%F %H:%M:%S" ) \t compare databases"
 su - user -c "/path-to-script/rc.check_errors"
 
 # stop cron updates
 # stop web server
+# recreate clean db and reboot
+
 if [[ -f "/dev/shm/dorepeair.txt" ]] ; then
    echo -e "$( date +"%F %H:%M:%S" ) \t disable cron db updates and stop web server"
    rm -f /dev/shm/canupdate.txt
@@ -413,6 +417,8 @@ if [[ -f "/dev/shm/dorepeair.txt" ]] ; then
    reboot
 fi
 
+# db check finished
+
 echo -e "$( date +"%F %H:%M:%S" ) \t equal richlists, no need to resync"
 
 exit 0
@@ -424,8 +430,8 @@ exit 0
 Logrotate
 ===============
 
-file is in /etc/logrotate.d/
-location of logs is a homedir of regular user
+File is in /etc/logrotate.d/ .
+Location of logs is a homedir of regular user.
 
 ########################################################################< remove before use>###
 /home/user/db_sync_check.log /home/user/eiquidus_start.log /home/user/eiquidus_stop.log {
