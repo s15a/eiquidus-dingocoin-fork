@@ -154,6 +154,12 @@ else
    /usr/bin/node --stack-size=2048 scripts/sync.js index update > /dev/null 2>&1
 fi
 
+# finish sync to the last block before going online
+
+echo -e "$( date +"%F %H:%M:%S" ) \t sync to the last block before going online"
+cd /home/user/E_iquidus &&
+/usr/bin/node --stack-size=2048 scripts/sync.js index update
+
 # become ready for cron executed scripts
 
 l=0
