@@ -69,7 +69,7 @@ Few scripts to handle tasks. Please remove comments before use.
 Start script
 ================
 
-Start script is to be executed as a unprivileged user at "init multuiser" time, rc.local style. The "sudo sync" command is recommended after execution.
+Start script is to be executed as an unprivileged user at "init multuiser" time, rc.local style. The "sudo sync" command is recommended after execution.
 It disables cron updates, starts dingocoind and eiquidus. Last 100 blocks in database are checked. Cron updates are enabled at the end.
 
 logfile /home/user/eiquidus_start.log:
@@ -89,7 +89,7 @@ su - user -c "/usr/local/bin/rc.eiqui | tee ~/eiquidus_start.log"
 if [[ -f "/dev/shm/canupdate.txt" ]] ; then
    echo -e "$( date +"%F %H:%M:%S" ) \t disable cron db updates"
    rm -f /dev/shm/canupdate.txt
-   sleep 30
+   sleep 60
 fi
 
 # start daemon
@@ -136,6 +136,7 @@ done
 # last block in db
 
 l=0
+n=0
 l=$( mongosh EIxplorerdb --eval "db.coinstats.find()" | grep "last\:" | grep -v "last\: 0," | sed "1,$ s/^\(.*\)last\: \(.*\),/\2/g" )
 echo -e "$( date +"%F %H:%M:%S" ) \t last block is $l"
 
@@ -154,11 +155,18 @@ else
    /usr/bin/node --stack-size=2048 scripts/sync.js index update > /dev/null 2>&1
 fi
 
-# finish sync to the last block before going online
+# check last 100 blocks in a db after sync|update (last block was number of blocks at sync|update start time)
+# check also updates db to the last block available, like the sync but slightly slower
 
-echo -e "$( date +"%F %H:%M:%S" ) \t sync to the last block before going online"
+l=0
+n=0
+l=$( mongosh EIxplorerdb --eval "db.coinstats.find()" | grep "last\:" | grep -v "last\: 0," | sed "1,$ s/^\(.*\)last\: \(.*\),/\2/g" )
+echo -e "$( date +"%F %H:%M:%S" ) \t last block after sync|update is $l"
+n=$(( $l-100 ))
+
+echo -e "$( date +"%F %H:%M:%S" ) \t db check since block $n"
 cd /home/user/E_iquidus &&
-/usr/bin/node --stack-size=2048 scripts/sync.js index update
+/usr/bin/node --stack-size=2048 scripts/sync.js index check $n
 
 # become ready for cron executed scripts
 
@@ -202,7 +210,7 @@ su - user -c "/usr/local/bin/rc.eiqui_down  | tee ~/eiquidus_stop.log"
 if [[ -f "/dev/shm/canupdate.txt" ]] ; then
    echo -e "$( date +"%F %H:%M:%S" ) \t disable cron db updates"
    rm -f /dev/shm/canupdate.txt
-   sleep 10
+   sleep 90
 fi
 
 # stop eiquidus
@@ -312,7 +320,8 @@ Rescan and flatten the tx count value for faster access, sudo and regular versio
 #!/bin/bash
 
 if [[ -f "/dev/shm/canupdate.txt" ]] ; then
-   su - user -c "cd /home/user/E_iquidus && /usr/bin/npm run reindex-txcount" > /dev/null 2>&1
+   #su - user -c "cd /home/user/E_iquidus && /usr/bin/npm run reindex-txcount" > /dev/null 2>&1
+   cd /home/user/E_iquidus && /usr/bin/npm run reindex-txcount
 fi
 
 exit 0
